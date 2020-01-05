@@ -306,8 +306,8 @@ stegcrackin() {
 }
 
 output_func() {
-    filename=`echo "$stegfile"`
-    filename_no_extension=`echo "$filename" | cut -f 1 -d '.'`
+    filename=$(echo "$stegfile")
+    filename_no_extension=$(echo "$filename" | cut -f 1 -d '.')
     cat file_info_output.log >> "$filename_no_extension".output.log
     cat exif_output.log >> "$filename_no_extension".output.log
     cat binwalk_output.log >> "$filename_no_extension".output.log
@@ -317,7 +317,7 @@ output_func() {
 }
 
 output_flag() {
-    optional_output_file=`echo "$filename_no_extension".output.log`
+    optional_output_file=$(echo "$filename_no_extension".output.log)
     cat "$optional_output_file" > "$output"
 }
 
