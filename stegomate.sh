@@ -44,16 +44,16 @@ allFunction() {
     create_imgs_dir(){
         
         find_imgs(){
-            find $cwd/ -maxdepth 1 -name '*.jpg' -exec mv {} $cwd/imgs/ \;
-            find $cwd/ -maxdepth 1 -name '*.JPG' -exec mv {} $cwd/imgs/ \;
-            find $cwd/ -maxdepth 1 -name '*.JPEG' -exec mv {} $cwd/imgs/ \;
-            find $cwd/ -maxdepth 1 -name '*.jpeg' -exec mv {} $cwd/imgs/ \;
-            find $cwd/ -maxdepth 1 -name '*.img' -exec mv {} $cwd/imgs/ \;
-            find $cwd/ -maxdepth 1 -name '*.IMG' -exec mv {} $cwd/imgs/ \;
-            find $cwd/ -maxdepth 1 -name '*.gif' -exec mv {} $cwd/imgs/ \;
-            find $cwd/ -maxdepth 1 -name '*.GIF' -exec mv {} $cwd/imgs/ \;
-            find $cwd/ -maxdepth 1 -name '*.png' -exec mv {} $cwd/imgs/ \;
-            find $cwd/ -maxdepth 1 -name '*.PNG' -exec mv {} $cwd/imgs/ \;
+            find "$cwd"/ -maxdepth 1 -name '*.jpg' -exec mv {} "$cwd"/imgs/ \;
+            find "$cwd"/ -maxdepth 1 -name '*.JPG' -exec mv {} "$cwd"/imgs/ \;
+            find "$cwd"/ -maxdepth 1 -name '*.JPEG' -exec mv {} "$cwd"/imgs/ \;
+            find "$cwd"/ -maxdepth 1 -name '*.jpeg' -exec mv {} "$cwd"/imgs/ \;
+            find "$cwd"/ -maxdepth 1 -name '*.img' -exec mv {} "$cwd"/imgs/ \;
+            find "$cwd"/ -maxdepth 1 -name '*.IMG' -exec mv {} "$cwd"/imgs/ \;
+            find "$cwd"/ -maxdepth 1 -name '*.gif' -exec mv {} "$cwd"/imgs/ \;
+            find "$cwd"/ -maxdepth 1 -name '*.GIF' -exec mv {} "$cwd"/imgs/ \;
+            find "$cwd"/ -maxdepth 1 -name '*.png' -exec mv {} "$cwd"/imgs/ \;
+            find "$cwd"/ -maxdepth 1 -name '*.PNG' -exec mv {} "$cwd"/imgs/ \;
         }
         
         if [ -d imgs ]; then
@@ -89,21 +89,21 @@ allFunction() {
             # Check File Type
             for i in imgs/*; do
                 printf "\e[93m##########################\e[0m Checking file type: $i \e[93m##################### \e[0m\n"
-                file $i
+                file "$i"
                 printf "\n"
             done
         } > file_info_out.log
         exif_tool() {
             for i in imgs/*; do
                 printf "\e[93m##########################\e[0m EXIFTOOL Output for $i \e[93m##################### \e[0m\n"
-                exiftool $i
+                exiftool "$i"
             done
         } > exifout.log
         binwalker() {
             for i in imgs/*; do
                 printf "\e[93m##########################\e[0m Binwalk Results for $i \e[93m######################## \e[0m\n"
                 printf "\e[93m################################################################################################## \e[0m\n"
-                binwalk $i
+                binwalk "$i"
                 printf "\e[93m################################################################################################## \e[0m\n"
             done
         } > bwalkout.log
@@ -111,7 +111,7 @@ allFunction() {
             for i in imgs/*; do
                 printf "\e[93m###########################\e[0m STRINGS OUTPUT FROM $i \e[93m####################### \e[0m\n"
                 printf "\e[93m################################################################################################## \e[0m\n"
-                strings -n 8 $i | sort -u
+                strings -n 8 "$i" | sort -u
                 printf "\e[93m################################################################################################## \e[0m\n"
             done
         } > stringsout.log
@@ -126,7 +126,7 @@ allFunction() {
             for i in imgs/*; do
                 if [[ $i == *.jpg ]] || [[ $i == *.jpeg ]]; then
                     echo -e "\e[92m[+]\e[0m Steghide Attempting to extract data from $i with password: password";
-                    steghide extract -sf $i -p password
+                    steghide extract -sf "$i" -p password
                 fi
             done
         }
@@ -161,10 +161,10 @@ allFunction() {
         
         create_steg_report_dir(){
             if [ -d steg_report ]; then
-                find $cwd/ -maxdepth 1 -name '*.log' -exec mv {} $cwd/steg_report/ \;
+                find "$cwd"/ -maxdepth 1 -name '*.log' -exec mv {} "$cwd"/steg_report/ \;
             else
                 mkdir -p steg_report
-                find $cwd/ -maxdepth 1 -name '*.log' -exec mv {} $cwd/steg_report/ \;
+                find "$cwd"/ -maxdepth 1 -name '*.log' -exec mv {} "$cwd"/steg_report/ \;
             fi
         }
         create_steg_report_dir
@@ -173,13 +173,13 @@ allFunction() {
     } # end of run_steg_tools function
     
     clean_up() {
-        rm $cwd/steg_report/file_info_out.log
-        rm $cwd/steg_report/bwalkout.log
-        rm $cwd/steg_report/exifout.log
-        rm $cwd/steg_report/stringsout.log
-        rm $cwd/steg_report/base64_decoded.log
-        rm $cwd/steg_report/stringer_info_log.log
-        rm $cwd/steg_report/b64_decoded.log
+        rm "$cwd"/steg_report/file_info_out.log
+        rm "$cwd"/steg_report/bwalkout.log
+        rm "$cwd"/steg_report/exifout.log
+        rm "$cwd"/steg_report/stringsout.log
+        rm "$cwd"/steg_report/base64_decoded.log
+        rm "$cwd"/steg_report/stringer_info_log.log
+        rm "$cwd"/steg_report/b64_decoded.log
     }
     
     c_you() {
@@ -257,26 +257,26 @@ strings_proc_info() {
 file_info() {
     # Check File Type
     printf "\e[93m##########################\e[0m Checking file type: $stegfile \e[93m######################## \e[0m\n"
-    file $stegfile
+    file "$stegfile"
     printf "\n"
 } > file_info_output.log
 
 exif() {
     # running exiftool
     printf "\e[93m##########################\e[0m EXIFTOOL Output for $stegfile \e[93m######################## \e[0m\n"
-    exiftool $stegfile
+    exiftool "$stegfile"
 } > exif_output.log
 
 binwalker() {
     # running binwalk
     printf "\e[93m##########################\e[0m Binwalk Results for $stegfile \e[93m######################## \e[0m\n"
-    binwalk $stegfile
+    binwalk "$stegfile"
 } > binwalk_output.log
 
 check_strings() {
     # Checking strings in file
     printf "\e[93m###########################\e[0m STRINGS OUTPUT FROM $stegfile \e[93m####################### \e[0m\n"
-    strings -n 8 $stegfile | sort -u
+    strings -n 8 "$stegfile" | sort -u
     printf "\e[93m################################################################################################## \e[0m\n"
 } > strings_output.log
 
@@ -289,45 +289,45 @@ check_strings_info() {
 steghide_extract() {
     # Running steghide
     echo -e "\e[92m[+]\e[0m Steghide Attempting to extract data from $stegfile with password: password"; echo ""
-    steghide extract -sf $stegfile -p password
+    steghide extract -sf "$stegfile" -p password
     printf "\n"
     echo -e "\e[92m[+]\e[0m Steghide Attempting to extract data from $stegfile with empty password"; echo ""
-    steghide extract -sf $stegfile -p ""
+    steghide extract -sf "$stegfile" -p ""
     printf "\n"
 }
 
 stegcrackin() {
     # Running stegcracker with probable top 12000 wordlist
     echo -e "\e[92m[+]\e[0m Running stegcracker on $stegfile with probable top 12000 wordlist: $stegfile"; echo ""
-    stegcracker $stegfile /usr/share/seclists/Passwords/probable-v2-top1575.txt
+    stegcracker "$stegfile" /usr/share/seclists/Passwords/probable-v2-top1575.txt
     printf "\n"
     echo -e "\e[92m[+]\e[0m Finished Running Steg Analysis on File: $stegfile"; echo ""
     echo -e "\e[92m[+]\e[0m All output will be saved in steg_report directory as <filename>.output.log"; echo ""
 }
 
 output_func() {
-    filename=`echo $stegfile`
+    filename=`echo "$stegfile"`
     filename_no_extension=`echo "$filename" | cut -f 1 -d '.'`
-    cat file_info_output.log >> $filename_no_extension.output.log
-    cat exif_output.log >> $filename_no_extension.output.log
-    cat binwalk_output.log >> $filename_no_extension.output.log
-    cat strings_output.log >> $filename_no_extension.output.log
-    cat check_strings_info_log.log >> $filename_no_extension.output.log
-    cat B64_decoded.log >> $filename_no_extension.output.log
+    cat file_info_output.log >> "$filename_no_extension".output.log
+    cat exif_output.log >> "$filename_no_extension".output.log
+    cat binwalk_output.log >> "$filename_no_extension".output.log
+    cat strings_output.log >> "$filename_no_extension".output.log
+    cat check_strings_info_log.log >> "$filename_no_extension".output.log
+    cat B64_decoded.log >> "$filename_no_extension".output.log
 }
 
 output_flag() {
-    optional_output_file=`echo $filename_no_extension.output.log`
+    optional_output_file=`echo "$filename_no_extension".output.log`
     cat "$optional_output_file" > "$output"
 }
 
 create_steg_report_dir(){
     cwd=$(pwd)
     if [ -d steg_report ]; then
-        find $cwd/ -maxdepth 1 -name '*.log' -exec mv {} $cwd/steg_report/ \;
+        find "$cwd"/ -maxdepth 1 -name '*.log' -exec mv {} "$cwd"/steg_report/ \;
     else
         mkdir -p steg_report
-        find $cwd/ -maxdepth 1 -name '*.log' -exec mv {} $cwd/steg_report/ \;
+        find "$cwd"/ -maxdepth 1 -name '*.log' -exec mv {} "$cwd"/steg_report/ \;
     fi
 }
 
@@ -340,13 +340,13 @@ format_B64_decoded_file() {
 } > B64_decoded.log
 
 clean_up() {
-    rm $cwd/steg_report/binwalk_output.log
-    rm $cwd/steg_report/exif_output.log
-    rm $cwd/steg_report/file_info_output.log
-    rm $cwd/steg_report/strings_output.log
-    rm $cwd/steg_report/check_strings_info_log.log
-    rm $cwd/steg_report/Base64_decoded.log
-    rm $cwd/steg_report/B64_decoded.log
+    rm "$cwd"/steg_report/binwalk_output.log
+    rm "$cwd"/steg_report/exif_output.log
+    rm "$cwd"/steg_report/file_info_output.log
+    rm "$cwd"/steg_report/strings_output.log
+    rm "$cwd"/steg_report/check_strings_info_log.log
+    rm "$cwd"/steg_report/Base64_decoded.log
+    rm "$cwd"/steg_report/B64_decoded.log
 }
 
 exit_msg() {
